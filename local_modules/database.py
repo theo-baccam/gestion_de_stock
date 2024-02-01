@@ -17,17 +17,15 @@ class Database():
         )
         return store
 
-
     def check_connection(self):
-        store = self.connect()
-        if store.is_connected():
+        try:
+            store = self.connect()
+            store.close()
             return True
-        else:
+        except:
             return False
-        store.close()
 
 
 if __name__ == "__main__":
     store = Database("CV&$i7mx$oZDrq")
     result = store.check_connection()
-    print(result)

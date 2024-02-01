@@ -6,6 +6,8 @@ from database import Database
 
 class Interface():
     def __init__(self):
+        self.connected = False
+
         self.root = Tk()
         self.root.title("Gestion de stocks")
         self.root.resizable(False, False)
@@ -27,10 +29,18 @@ class Interface():
         password_text = ttk.Label(password_frame, text="Enter server password")
         password_text.pack(padx=4, pady=4, side=LEFT)
 
-        password_field = ttk.Entry(password_frame)
+        password_field = ttk.Entry(password_frame, show="*")
         password_field.pack(padx=4, pady=4, side = LEFT)
 
-        password_button = ttk.Button(password_frame, text="Connect")
+        def attempt_connection():
+            password = password_field.get()
+            self.connected = Database(password).check_connection()
+
+        password_button = ttk.Button(
+            password_frame,
+            text="Connect",
+            command=attempt_connection
+        )
         password_button.pack(padx=4, pady=4, side = LEFT)
 
         password_frame.pack(padx=8, pady=8, side=LEFT)
