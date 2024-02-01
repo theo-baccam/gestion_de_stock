@@ -7,20 +7,23 @@ from database import Database
 class Interface():
     def __init__(self):
         self.connected = False
+        self.password = None
 
         self.root = Tk()
-        self.root.title("Gestion de stocks")
         self.root.resizable(False, False)
-
         self.render_top_frame()
-        self.render_main_frame()
-
         self.root.mainloop()
+
+        if self.connected:
+            self.root = Tk()
+            self.root.title("Gestion de stocks")
+            self.root.resizable(False, False)
+            self.render_main_frame()
+            self.root.mainloop()
 
     def render_top_frame(self):
         top_frame = ttk.Frame(self.root)
         self.render_password_area(top_frame)
-        self.render_refresh_button(top_frame)
         top_frame.pack(padx=16, pady=16, side=TOP, fill=BOTH)
 
     def render_password_area(self, top_frame):
@@ -35,6 +38,11 @@ class Interface():
         def attempt_connection():
             password = password_field.get()
             self.connected = Database(password).check_connection()
+            if self.connected:
+                self.password = password
+                self.root.destroy()
+            else:
+                self.password = None
 
         password_button = ttk.Button(
             password_frame,
@@ -44,10 +52,6 @@ class Interface():
         password_button.pack(padx=4, pady=4, side = LEFT)
 
         password_frame.pack(padx=8, pady=8, side=LEFT)
-
-    def render_refresh_button(self, top_frame):
-        refresh_button = ttk.Button(top_frame, text="Refresh")
-        refresh_button.pack(padx=4, pady=4, side = RIGHT)
 
     def render_main_frame(self):
         main_frame = ttk.Frame(self.root)
@@ -62,7 +66,10 @@ class Interface():
         list_frame.pack(padx=8, pady=8, side=LEFT)
 
     def render_category_dropdown(self, list_frame):
-        categories = ["ALL", "OTHER"]
+        categories = [
+            "All",
+            *[category for category in Database(self.password).get_categories()]
+        ]
 
         category_dropdown = ttk.Combobox( list_frame, values=categories)
         category_dropdown.set(categories[0])
@@ -84,7 +91,7 @@ class Interface():
             product_list.insert(
                 "",
                 END,
-                values=(i, "Name", "Description", i*100, i*10, "Item")
+                values=(i, "Name", i*100, i*10, "Item")
             )
 
         scrollbar = ttk.Scrollbar(
@@ -168,6 +175,7 @@ class Interface():
     def apply_change_button(self, product_frame):
         apply_change = ttk.Button(product_frame, text="Apply changes")
         apply_change.pack(padx=4, pady=4, side=BOTTOM)
+
 
 
 if __name__ == "__main__":

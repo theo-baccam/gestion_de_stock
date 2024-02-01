@@ -25,7 +25,18 @@ class Database():
         except:
             return False
 
+    def get_categories(self):
+        store = self.connect()
+
+        cursor = store.cursor()
+        cursor.execute("SELECT name FROM category")
+        sql_output = cursor.fetchall()
+        cursor.close()
+        store.close()
+
+        category_names = [category[0] for category in sql_output]
+        return category_names
+
 
 if __name__ == "__main__":
     store = Database("CV&$i7mx$oZDrq")
-    result = store.check_connection()
