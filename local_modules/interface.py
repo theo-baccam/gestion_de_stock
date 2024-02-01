@@ -170,7 +170,11 @@ class Interface():
         category_label = ttk.Label(category_frame, text="category:")
         category_label.pack(padx=2, pady=2, side=LEFT)
 
-        categories = ["ALL", "OTHER"]
+
+        categories = [
+            "All",
+            *[category for category in Database(self.password).get_categories()]
+        ]
 
         category_dropdown = ttk.Combobox(category_frame, values=categories)
         category_dropdown.set(categories[0])
