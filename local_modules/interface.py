@@ -16,7 +16,7 @@ class Interface():
 
         if self.connected:
             self.root = Tk()
-            self.root.title("Gestion de stocks")
+            self.root.title("Stock Manager")
             self.root.resizable(False, False)
             self.render_main_frame()
             self.root.mainloop()
@@ -87,11 +87,17 @@ class Interface():
             product_list.column(column, width=16*len(column))
             product_list.heading(column, text=column)
 
-        for i in range(1, 16):
+        for product in Database(self.password).get_products():
             product_list.insert(
                 "",
                 END,
-                values=(i, "Name", i*100, i*10, "Item")
+                values=(
+                    product["id"],
+                    product["name"],
+                    product["price"],
+                    product["quantity"],
+                    product["id_category"]
+                )
             )
 
         scrollbar = ttk.Scrollbar(
