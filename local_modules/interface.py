@@ -8,6 +8,7 @@ class Interface():
     def __init__(self):
         self.root = Tk()
         self.root.title("Gestion de stocks")
+        self.root.resizable(False, False)
 
         self.render_top_frame()
         self.render_main_frame()
@@ -58,7 +59,7 @@ class Interface():
         category_dropdown.pack(padx=4, pady=4, side=TOP)
 
     def render_product_list(self, list_frame):
-        columns = ("name", "description", "price", "quantity", "category")
+        columns = ("id", "name", "price", "quantity", "category")
         product_list = ttk.Treeview(
             list_frame,
             columns=columns
@@ -73,7 +74,7 @@ class Interface():
             product_list.insert(
                 "",
                 END,
-                values=("Name", "Description", i*100, i*10, "Item")
+                values=(i, "Name", "Description", i*100, i*10, "Item")
             )
 
         scrollbar = ttk.Scrollbar(
@@ -113,7 +114,7 @@ class Interface():
         description_label = ttk.Label(description_frame, text="Description:")
         description_label.pack(padx=2, pady=2, side=LEFT)
 
-        description_entry = ttk.Entry(description_frame)
+        description_entry = Text(description_frame, height=4, width=16)
         description_entry.pack(padx=2, pady=2, side=LEFT)
 
         description_frame.pack(padx=4, pady=4, side=TOP)
