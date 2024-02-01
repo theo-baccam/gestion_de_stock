@@ -66,7 +66,7 @@ class Interface():
 
         product_list.column("#0", width=0, stretch=NO)
         for column in columns:
-            product_list.column(column, width=96)
+            product_list.column(column, width=16*len(column))
             product_list.heading(column, text=column)
 
         for i in range(1, 16):
@@ -92,6 +92,8 @@ class Interface():
         self.render_description_frame(product_frame)
         self.render_price_frame(product_frame)
         self.render_quantity_frame(product_frame)
+        self.render_category_frame(product_frame)
+        self.apply_change_button(product_frame)
         product_frame.pack(padx=8, pady=8, side=RIGHT)
 
     def render_name_frame(self, product_frame):
@@ -137,6 +139,24 @@ class Interface():
         quantity_entry.pack(padx=2, pady=2, side=LEFT)
 
         quantity_frame.pack(padx=4, pady=4, side=TOP)
+
+    def render_category_frame(self, product_frame):
+        category_frame = ttk.Frame(product_frame)
+
+        category_label = ttk.Label(category_frame, text="category:")
+        category_label.pack(padx=2, pady=2, side=LEFT)
+
+        categories = ["ALL", "OTHER"]
+
+        category_dropdown = ttk.Combobox(category_frame, values=categories)
+        category_dropdown.set(categories[0])
+        category_dropdown.pack(padx=4, pady=4, side=TOP)
+
+        category_frame.pack(padx=4, pady=4, side=TOP)
+
+    def apply_change_button(self, product_frame):
+        apply_change = ttk.Button(product_frame, text="Apply changes")
+        apply_change.pack(padx=4, pady=4, side=BOTTOM)
 
 
 if __name__ == "__main__":
