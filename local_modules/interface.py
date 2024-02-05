@@ -1,7 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 
-from database import Database as db
+from .database import Database as db
 
 
 class Interface():
@@ -303,7 +303,3 @@ class Interface():
         category_apply_button.pack(padx=4, pady=4, side = LEFT)
         category_apply_button.bind("<ButtonRelease-1>", update)
         frame.pack(padx=8, pady=8)
-
-
-if __name__ == "__main__":
-    Interface()
