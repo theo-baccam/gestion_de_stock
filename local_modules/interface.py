@@ -11,13 +11,14 @@ class Interface():
         self.selected_id = None
 
         self.root = Tk()
+        self.root.title("Téeo's Stock Manager")
         self.root.resizable(False, False)
         self.render_password_area()
         self.root.mainloop()
 
         if self.connected:
             self.root = Tk()
-            self.root.title("Stock Manager")
+            self.root.title("Théo's Stock Manager")
             self.render_main_frame()
             self.root.mainloop()
 
@@ -29,7 +30,7 @@ class Interface():
     def render_password_area(self):
         password_frame = ttk.Frame(self.root)
 
-        password_text = ttk.Label(password_frame, text="Enter server password")
+        password_text = ttk.Label(password_frame, text="Mot de passe du serveur:")
         password_text.pack(padx=8, pady=8, side=LEFT)
 
         password_field = ttk.Entry(password_frame, show="*")
@@ -46,7 +47,7 @@ class Interface():
 
         password_button = ttk.Button(
             password_frame,
-            text="Connect",
+            text="Se connecter",
             command=attempt_connection
         )
         password_button.pack(padx=4, pady=4, side = LEFT)
@@ -138,7 +139,7 @@ class Interface():
         def refresh(event):
             self.refresh_main_frame()
 
-        refresh_button = ttk.Button(main_frame, text = "Refresh")
+        refresh_button = ttk.Button(main_frame, text = "Rafraichir")
         refresh_button.pack(padx=8, pady=8, side=BOTTOM)
         refresh_button.bind("<ButtonRelease-1>", refresh)
 
@@ -147,7 +148,7 @@ class Interface():
             db(self.password).create_new_product()
             self.refresh_main_frame()
 
-        add_button = ttk.Button(main_frame, text = "Add")
+        add_button = ttk.Button(main_frame, text = "Ajouter produit")
         add_button.pack(padx=8, pady=8, side=BOTTOM)
         add_button.bind("<ButtonRelease-1>", add_new_product)
 
@@ -156,12 +157,12 @@ class Interface():
             db(self.password).delete_product(self.selected_id)
             self.refresh_main_frame()
 
-        add_button = ttk.Button(main_frame, text = "Remove")
+        add_button = ttk.Button(main_frame, text = "Supprimer produit")
         add_button.pack(padx=8, pady=8, side=BOTTOM)
         add_button.bind("<ButtonRelease-1>", remove_product)
 
     def categories_button(self, main_frame):
-        categories_button = ttk.Button(main_frame, text = "Categories")
+        categories_button = ttk.Button(main_frame, text = "Aide")
         categories_button.pack(padx=8, pady=8, side=TOP)
 
     def update_name_window(self):
@@ -173,7 +174,7 @@ class Interface():
         update_name = Toplevel(self.root)
         update_name.grab_set()
         frame = Frame(update_name)
-        name_label = ttk.Label(update_name, text="Name:")
+        name_label = ttk.Label(update_name, text="Nom:")
         name_label.pack(padx=4, pady=4, side=LEFT)
 
         name_text_field = ttk.Entry(update_name)
@@ -226,7 +227,7 @@ class Interface():
         update_price = Toplevel(self.root)
         update_price.grab_set()
         frame = Frame(update_price)
-        price_label = ttk.Label(update_price, text="Price:")
+        price_label = ttk.Label(update_price, text="Prix:")
         price_label.pack(padx=4, pady=4, side=LEFT)
 
         price_text_field = ttk.Entry(update_price)
@@ -254,7 +255,7 @@ class Interface():
         update_quantity = Toplevel(self.root)
         update_quantity.grab_set()
         frame = Frame(update_quantity)
-        quantity_label = ttk.Label(update_quantity, text="Quantity:")
+        quantity_label = ttk.Label(update_quantity, text="Quantité:")
         quantity_label.pack(padx=4, pady=4, side=LEFT)
 
         quantity_text_field = ttk.Entry(update_quantity)
@@ -286,7 +287,7 @@ class Interface():
         update_category = Toplevel(self.root)
         update_category.grab_set()
         frame = Frame(update_category)
-        category_label = ttk.Label(update_category, text="Category:")
+        category_label = ttk.Label(update_category, text="Catégorie:")
         category_label.pack(padx=4, pady=4, side=LEFT)
 
         category_combobox= ttk.Combobox(
