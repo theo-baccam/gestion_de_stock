@@ -13,7 +13,7 @@ DROP TABLE IF EXISTS product;
 CREATE TABLE `product` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
-  `description` varchar(255) NOT NULL,
+  `description` tinytext NOT NULL,
   `price` float NOT NULL,
   `quantity` int NOT NULL,
   `id_category` int NOT NULL,

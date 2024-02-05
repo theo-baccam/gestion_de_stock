@@ -60,7 +60,6 @@ class Interface():
         self.render_remove_button(main_frame)
         self.render_add_button(main_frame)
         self.render_refresh_button(main_frame)
-        self.categories_button(main_frame)
         main_frame.pack(padx=16, pady=16, side=BOTTOM)
 
     def render_list_frame(self, main_frame):
@@ -140,7 +139,7 @@ class Interface():
             self.refresh_main_frame()
 
         refresh_button = ttk.Button(main_frame, text = "Rafraichir")
-        refresh_button.pack(padx=8, pady=8, side=BOTTOM)
+        refresh_button.pack(padx=8, pady=8, side=TOP)
         refresh_button.bind("<ButtonRelease-1>", refresh)
 
     def render_add_button(self, main_frame):
@@ -161,13 +160,11 @@ class Interface():
         add_button.pack(padx=8, pady=8, side=BOTTOM)
         add_button.bind("<ButtonRelease-1>", remove_product)
 
-    def categories_button(self, main_frame):
-        categories_button = ttk.Button(main_frame, text = "Aide")
-        categories_button.pack(padx=8, pady=8, side=TOP)
-
     def update_name_window(self):
         def update(event):
             new_value = name_text_field.get()
+            if len(new_value) <= 0 or len(new_value) > 255:
+                return
             db(self.password).update_attribute_value(self.selected_id, "name", new_value)
             self.refresh_main_frame()
 
@@ -193,6 +190,8 @@ class Interface():
     def update_description_window(self):
         def update(event):
             new_value = description_text_field.get("1.0", "end-1c")
+            if len(new_value) <= 0 or len(new_value) > 255:
+                return
             db(self.password).update_attribute_value(self.selected_id, "description", new_value)
             self.refresh_main_frame()
 
@@ -219,6 +218,8 @@ class Interface():
         def update(event):
             try:
                 new_value = float(price_text_field.get())
+                if new_value < 0:
+                    return
                 db(self.password).update_attribute_value(self.selected_id, "price", new_value)
                 self.refresh_main_frame()
             except:
@@ -247,6 +248,8 @@ class Interface():
         def update(event):
             try:
                 new_value = int(quantity_text_field.get())
+                if new_value < 0:
+                    return
                 db(self.password).update_attribute_value(self.selected_id, "quantity", new_value)
                 self.refresh_main_frame()
             except:
